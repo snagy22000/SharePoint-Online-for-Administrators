@@ -1,0 +1,85 @@
+Add three Text Input controls
+1. Name
+2. Email
+3. Phone
+
+UpdateContext({validationForm: true});
+If(
+    IsBlank(txt_name.Text),
+    UpdateContext({validationForm: false});Set(strcolorn,Red);
+);
+If(
+    IsBlank(txt_email.Text),
+    UpdateContext({validationForm: false});Set(strcolore,Red);
+);
+If(
+    IsBlank(txt_phone.Text),
+    UpdateContext({validationForm: false});Set(strcolorp,Red);
+);
+If(
+    validationForm,
+    Notify(
+        "Sucess",
+        NotificationType.Success
+    )
+    ,
+    Notify(
+        "Please enter all columns",
+        NotificationType.Error
+    )
+);
+
+Add one label and add "Please enter proper Phone" and visible property
+If(
+    IsMatch(
+    txt_phone.Text,
+        "^[\\(]{0,1}([0-9]){3}[\\)]{0,1}[ ]?([^0-1]){1}([0-9]){2}[ ]?[-]?[ ]?([0-9]){4}[ ]*((x){0,1}([0-9]){1,5}){0,1}$"
+    ),
+    false,
+    true
+)
+
+Add one label and add "Please enter proper Email" and visible property
+If(IsMatch(txt_email.Text,"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$"),false,true)
+
+IsBlank(txt_name.Text)
+
+
+Without RegEx
+Add one label and add "Please enter proper Email" and visible property
+If(IsMatch(txt_email.Text,Match.Email),false,true)
+
+While blank hide the message
+For Email
+If(
+    IsBlank(txt_email.Text),
+    false, If(IsMatch(
+        txt_email.Text,
+        Match.Email
+    ),
+    false,
+    true)
+   
+)
+
+for Phone
+If(
+    IsBlank(txt_phone.Text),false,If(
+    IsMatch(
+        txt_phone.Text,
+        "^[\\(]{0,1}([0-9]){3}[\\)]{0,1}[ ]?([^0-1]){1}([0-9]){2}[ ]?[-]?[ ]?([0-9]){4}[ ]*((x){0,1}([0-9]){1,5}){0,1}$"
+    ),
+    false,
+    true
+))
+
+
+BorderColor for TextInputs based on validation
+strcolorn - txt_name
+strcolore - txt_email
+strcolorp - txt_phone
+
+onChange
+If(IsBlank(txt_name.Text),UpdateContext({strcolorn: Red}),UpdateContext({strcolorn: Black}))
+If(IsBlank(txt_email.Text),UpdateContext({strcolore: Red}),UpdateContext({strcolore: Black}))
+If(IsBlank(txt_phone.Text),UpdateContext({strcolorp: Red}),UpdateContext({strcolorp: Black}))
